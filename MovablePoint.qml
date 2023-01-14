@@ -7,17 +7,17 @@ Rectangle {
     width: 10
     height: 10
 
-    MouseArea {
-        id : area
-        anchors.fill: parent
-        x: point.x
-        y: point.y
+//    MouseArea {
+//        id : area
+//        anchors.fill: parent
+//        x: point.x
+//        y: point.y
 
-        onMouseXChanged : {
-            point.x = mapToItem(point.parent, mouse.x, mouse.y).x
-        }
-        onMouseYChanged: {
-            point.y = mapToItem(point.parent, mouse.x, mouse.y).y
-        }
-    }
+//        onMouseXChanged : {
+//            point.x = mapToItem(point.parent, mouse.x, mouse.y).x
+//        }
+//        onMouseYChanged: {
+//            point.y = mapToItem(point.parent, mouse.x, mouse.y).y
+//        }
+//    }
 }

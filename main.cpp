@@ -1,7 +1,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include <QQmlDebuggingEnabler>
+#include <QQmlContext>
+
+#include "trianglemodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,5 +21,7 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
+    TriangleModel model;
+    engine.rootContext()->setContextProperty("triangleModel", &model);
     return app.exec();
 }

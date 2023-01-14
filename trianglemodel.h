@@ -7,17 +7,20 @@
 
 class TriangleModel : public QAbstractListModel
 {
+    Q_OBJECT
 public:
     TriangleModel();
-
-    // QAbstractItemModel interface
-public:
     enum Roles {
-        TriangleRole = Qt::ItemDataRole::UserRole + 1
+        TriangleRole = Qt::ItemDataRole::UserRole + 1,
+        XPoint,
+        YPoint,
+        ZPoint
     };
-    void addTriangle(const Triangle &triangle);
+    Q_INVOKABLE void addTriangle(const QPointF &x, const QPointF &y, const QPointF &z);
+
     int rowCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
+    QHash<int, QByteArray> roleNames() const;
 private:
     QVector<Triangle> _triangles;
 };

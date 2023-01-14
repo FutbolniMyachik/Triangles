@@ -3,9 +3,15 @@ import QtQuick.Shapes 1.15
 
 Item {
     id: triangle
-    property MovablePoint xPoint: xPoint
-    property MovablePoint yPoint: yPoint
-    property MovablePoint zPoint: zPoint
+    property MovablePoint point1: MovablePoint {
+        parent: triangle
+    }
+    property MovablePoint point2: MovablePoint {
+        parent: triangle
+    }
+    property MovablePoint point3: MovablePoint {
+        parent: triangle
+    }
 //    property list<MovablePoint> points: [
 //        MovablePoint {
 //            id: xPoint
@@ -31,20 +37,20 @@ Item {
             startY: xPoint.y
 
             PathLine {
-                x: xPoint.x
-                y: xPoint.y
+                x: point1.x
+                y: point1.y
             }
             PathLine {
-                x: yPoint.x
-                y: yPoint.y
+                x: point2.x
+                y: point2.y
             }
             PathLine {
-                x: zPoint.x
-                y: zPoint.y
+                x: point3.x
+                y: point3.y
             }
             PathLine {
-                x: xPoint.x
-                y: xPoint.y
+                x: point1.x
+                y: point1.y
             }
 
 //            startX: triangle.points[1].x
@@ -73,17 +79,5 @@ Item {
 
 //            }
 //        }
-    }
-    MovablePoint {
-        id: xPoint
-        parent: triangle
-    }
-    MovablePoint {
-        id: yPoint
-        parent: triangle
-    }
-    MovablePoint {
-        id: zPoint
-        parent: triangle
     }
 }

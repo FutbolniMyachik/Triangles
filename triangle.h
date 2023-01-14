@@ -2,20 +2,22 @@
 #define TRIANGLE_H
 
 #include <QPointF>
-#include <QObject>
+#include <array>
+#include <QVariant>
 
-class Triangle : public QObject
+class Triangle
 {
-    Q_OBJECT
 public:
-    Triangle(const std::array<QPointF, 3> &vertixes);
-    Triangle(std::array<QPointF, 3> &&vertixes);
+    explicit Triangle(const std::array<QPointF, 3> &vertixes);
+    explicit Triangle(std::array<QPointF, 3> &&vertixes);
 
-    Q_SLOT void setVertix(int index, const QPointF &vertix);
-
-    Q_SIGNAL void vertixChanged(int index, const QPointF &vertix);
+    QPointF x() const;
+    QPointF y() const;
+    QPointF z() const;
 private:
     std::array<QPointF, 3> _vertixes;
 };
+
+Q_DECLARE_METATYPE(Triangle)
 
 #endif // TRIANGLE_H

@@ -1,6 +1,6 @@
 #include "triangle.h"
 
-Triangle::Triangle(const std::array<QPointF, 3> &vertixes) :
+Triangle::Triangle(const std::array<QPointF, 3> &vertixes):
     _vertixes(vertixes)
 {
 
@@ -12,8 +12,17 @@ Triangle::Triangle(std::array<QPointF, 3> &&vertixes) :
 
 }
 
-void Triangle::setVertix(int index, const QPointF &vertix)
+QPointF Triangle::x() const
 {
-    _vertixes[index] = vertix;
-    emit vertixChanged(index, _vertixes[index]);
+    return _vertixes[0];
+}
+
+QPointF Triangle::y() const
+{
+    return _vertixes[1];
+}
+
+QPointF Triangle::z() const
+{
+    return _vertixes[2];
 }
