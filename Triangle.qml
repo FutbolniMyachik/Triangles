@@ -3,6 +3,9 @@ import QtQuick.Shapes 1.15
 
 Item {
     id: triangle
+    property MovablePoint xPoint: xPoint
+    property MovablePoint yPoint: yPoint
+    property MovablePoint zPoint: zPoint
 //    property list<MovablePoint> points: [
 //        MovablePoint {
 //            id: xPoint
@@ -18,6 +21,7 @@ Item {
 //        }
 //    ]
     Shape {
+        opacity: 0.5
         ShapePath {
             id: shapePath
             strokeColor: "black"
