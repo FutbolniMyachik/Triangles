@@ -14,12 +14,24 @@ Window {
     property list<point> points
     property bool savePoints: false
 
+    Menu {
+        id: triangleMenu
+        property int triangleIndex: 0
+        MenuItem {
+            text: qsTr("Удалить")
+            onTriggered : {
+                triangleModel.removeTriangle(triangleMenu.triangleIndex)
+            }
+        }
+    }
+
     Repeater {
 
         anchors.fill: parent
         model: triangleModel
 
         delegate: Item {
+
             MovablePoint {
                 parent: triangle
                 x: xPoint.x
@@ -27,11 +39,20 @@ Window {
 
                 MouseArea {
                     anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        if (mouse.button == Qt.RightButton) {
+                            triangleMenu.popup()
+                            triangleMenu.triangleIndex = index.row
+                        }
+                    }
                     onMouseXChanged: {
-                        xPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
+                        if (mouse.button != Qt.RightButton)
+                            xPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
                     }
                     onMouseYChanged: {
-                        xPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
+                        if (mouse.button != Qt.RightButton)
+                            xPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
                     }
                 }
             }
@@ -41,11 +62,20 @@ Window {
                 y: yPoint.y
                 MouseArea {
                     anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        if (mouse.button == Qt.RightButton) {
+                            triangleMenu.popup()
+                            triangleMenu.triangleIndex = index.row
+                        }
+                    }
                     onMouseXChanged: {
-                        yPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
+                        if (mouse.button != Qt.RightButton)
+                            yPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
                     }
                     onMouseYChanged: {
-                        yPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
+                        if (mouse.button != Qt.RightButton)
+                            yPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
                     }
                 }
             }
@@ -55,11 +85,20 @@ Window {
                 y: zPoint.y
                 MouseArea {
                     anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        if (mouse.button == Qt.RightButton) {
+                            triangleMenu.popup()
+                            triangleMenu.triangleIndex = index.row
+                        }
+                    }
                     onMouseXChanged: {
-                        zPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
+                        if (mouse.button != Qt.RightButton)
+                            zPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
                     }
                     onMouseYChanged: {
-                        zPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
+                        if (mouse.button != Qt.RightButton)
+                            zPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
                     }
                 }
             }

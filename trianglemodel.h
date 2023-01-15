@@ -16,6 +16,7 @@ public:
         YPoint,
         ZPoint
     };
+    Q_INVOKABLE void removeTriangle(int index);
     Q_INVOKABLE void addTriangle(const QPointF &x, const QPointF &y, const QPointF &z);
 
     int rowCount(const QModelIndex &parent) const;
