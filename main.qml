@@ -9,10 +9,7 @@ Window {
     width: 640
     height: 480
     visible: true
-    title: qsTr("Hello World")
-
-    property list<point> points
-    property bool savePoints: false
+    title: qsTr("Triangles")
 
     Menu {
         id: triangleMenu
@@ -31,77 +28,46 @@ Window {
         model: triangleModel
 
         delegate: Item {
+            id: triangle
+            function addPoint(point) {
+                var newObject = Qt.createQmlObject(`
+                   import QtQuick 2.15
+                   import QtQuick.Controls 2.15
 
-            MovablePoint {
-                parent: triangle
-                x: xPoint.x
-                y: xPoint.y
+                   MovablePoint {
+                       x: ${point}.x
+                       y: ${point}.y
 
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onClicked: {
-                        if (mouse.button == Qt.RightButton) {
-                            triangleMenu.popup()
-                            triangleMenu.triangleIndex = index.row
-                        }
-                    }
-                    onMouseXChanged: {
-                        if (mouse.button != Qt.RightButton)
-                            xPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
-                    }
-                    onMouseYChanged: {
-                        if (mouse.button != Qt.RightButton)
-                            xPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
-                    }
-                }
+                       MouseArea {
+                           anchors.fill: parent
+                           acceptedButtons: Qt.LeftButton | Qt.RightButton
+                           onClicked: {
+                               if (mouse.button == Qt.RightButton) {
+                                   triangleMenu.popup()
+                                   triangleMenu.triangleIndex = index.row
+                               }
+                           }
+                           onMouseXChanged: {
+                               if (mouse.button != Qt.RightButton)
+                                   ${point}.x = mapToItem(parent.parent, mouse.x, mouse.y).x
+                           }
+                           onMouseYChanged: {
+                               if (mouse.button != Qt.RightButton)
+                                   ${point}.y = mapToItem(parent.parent, mouse.x, mouse.y).y
+                           }
+                       }
+                   }
+                    `,
+                    triangle,
+                );
             }
-            MovablePoint {
-                parent: triangle
-                x: yPoint.x
-                y: yPoint.y
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onClicked: {
-                        if (mouse.button == Qt.RightButton) {
-                            triangleMenu.popup()
-                            triangleMenu.triangleIndex = index.row
-                        }
-                    }
-                    onMouseXChanged: {
-                        if (mouse.button != Qt.RightButton)
-                            yPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
-                    }
-                    onMouseYChanged: {
-                        if (mouse.button != Qt.RightButton)
-                            yPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
-                    }
-                }
+
+            Component.onCompleted: {
+                addPoint("xPoint")
+                addPoint("yPoint")
+                addPoint("zPoint")
             }
-            MovablePoint {
-                parent: triangle
-                x: zPoint.x
-                y: zPoint.y
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onClicked: {
-                        if (mouse.button == Qt.RightButton) {
-                            triangleMenu.popup()
-                            triangleMenu.triangleIndex = index.row
-                        }
-                    }
-                    onMouseXChanged: {
-                        if (mouse.button != Qt.RightButton)
-                            zPoint.x = mapToItem(parent.parent, mouse.x, mouse.y).x
-                    }
-                    onMouseYChanged: {
-                        if (mouse.button != Qt.RightButton)
-                            zPoint.y = mapToItem(parent.parent, mouse.x, mouse.y).y
-                    }
-                }
-            }
+
             Shape {
                 opacity: 0.5
                 ShapePath {
@@ -112,21 +78,25 @@ Window {
                     startX: xPoint.x
                     startY: xPoint.y
 
-                    PathLine {
-                        x: xPoint.x
-                        y: xPoint.y
+                    function addPathLine(point) {
+                        var pathLine = Qt.createQmlObject(`
+                            import QtQuick 2.15
+                            import QtQuick.Shapes 1.15
+                            PathLine {
+                                x: ${point}.x
+                                y: ${point}.y
+                            }
+                            `,
+                            shapePath,
+                        );
+                        shapePath.pathElements.push(pathLine)
                     }
-                    PathLine {
-                        x: yPoint.x
-                        y: yPoint.y
-                    }
-                    PathLine {
-                        x: zPoint.x
-                        y: zPoint.y
-                    }
-                    PathLine {
-                        x: xPoint.x
-                        y: xPoint.y
+
+                    Component.onCompleted: {
+                        addPathLine("xPoint")
+                        addPathLine("yPoint")
+                        addPathLine("zPoint")
+                        addPathLine("xPoint")
                     }
                 }
             }
@@ -137,6 +107,10 @@ Window {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         enabled: savePoints
+
+        property bool savePoints: false
+        property list<point> points
+
         onClicked: {
             if (!window.savePoints)
                 return
@@ -158,4 +132,5 @@ Window {
             window.savePoints = true
         }
     }
+
 }
