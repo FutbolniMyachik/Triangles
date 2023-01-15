@@ -11,6 +11,9 @@ Window {
     visible: true
     title: qsTr("Triangles")
 
+    property bool savePoints: false
+    property list<point> points
+
     Menu {
         id: triangleMenu
         property int triangleIndex: 0
@@ -107,9 +110,6 @@ Window {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         enabled: savePoints
-
-        property bool savePoints: false
-        property list<point> points
 
         onClicked: {
             if (!window.savePoints)
