@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Triangle.qml</file>
-        <file>MovablePoint.qml</file>
+        <file>Point.qml</file>
     </qresource>
 </RCC>

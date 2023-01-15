@@ -30,6 +30,9 @@ Window {
         anchors.fill: parent
         model: triangleModel
 
+        // MouseArea не хочет работать в Shape, поэтому приходится
+        // вызывать контекстное меню через вершины
+        // TODO: Добавить вызов контекстного меню через Shape
         delegate: Item {
             id: triangle
             function addPoint(point) {
@@ -37,7 +40,7 @@ Window {
                    import QtQuick 2.15
                    import QtQuick.Controls 2.15
 
-                   MovablePoint {
+                    Point {
                        x: ${point}.x - width / 2
                        y: ${point}.y - height / 2
 
