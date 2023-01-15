@@ -16,6 +16,7 @@ void TriangleModel::removeTriangle(int index)
     beginRemoveRows({}, index, index);
     _triangles.remove(index);
     endRemoveRows();
+    calcItersectCount();
 }
 
 void TriangleModel::addTriangle(const QPointF &x, const QPointF &y, const QPointF &z)

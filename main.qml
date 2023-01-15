@@ -38,8 +38,8 @@ Window {
                    import QtQuick.Controls 2.15
 
                    MovablePoint {
-                       x: ${point}.x
-                       y: ${point}.y
+                       x: ${point}.x - width / 2
+                       y: ${point}.y - height / 2
 
                        MouseArea {
                            anchors.fill: parent
