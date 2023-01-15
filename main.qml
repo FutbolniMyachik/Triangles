@@ -46,8 +46,8 @@ Window {
                            acceptedButtons: Qt.LeftButton | Qt.RightButton
                            onClicked: {
                                if (mouse.button == Qt.RightButton) {
+                                   triangleMenu.triangleIndex = index
                                    triangleMenu.popup()
-                                   triangleMenu.triangleIndex = index.row
                                }
                            }
                            onMouseXChanged: {
@@ -73,6 +73,16 @@ Window {
 
             Shape {
                 opacity: 0.5
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        if (mouse.button == Qt.RightButton) {
+                            triangleMenu.popup()
+                            triangleMenu.triangleIndex = index.row
+                        }
+                    }
+                }
                 ShapePath {
                     id: shapePath
                     strokeColor: Qt.rgba(Math.random(), Math.random(), Math.random())
