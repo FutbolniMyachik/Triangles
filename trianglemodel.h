@@ -16,6 +16,9 @@ public:
         YPoint,
         ZPoint
     };
+    Q_INVOKABLE int intersectCount() const;
+    Q_SIGNAL void intersectingCountChanged(int intersectingCount);
+
     Q_INVOKABLE void removeTriangle(int index);
     Q_INVOKABLE void addTriangle(const QPointF &x, const QPointF &y, const QPointF &z);
 
@@ -25,7 +28,10 @@ public:
     QHash<int, QByteArray> roleNames() const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
 private:
+    void calcItersectCount();
+
     QVector<Triangle> _triangles;
+    int _intersectingCount = 0;
 };
 
 #endif // TRIANGLEMODEL_H

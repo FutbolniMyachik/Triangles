@@ -1,7 +1,14 @@
 #include "trianglemodel.h"
 
+#include "math.h"
+
 TriangleModel::TriangleModel()
 {
+}
+
+int TriangleModel::intersectCount() const
+{
+    return _intersectingCount;
 }
 
 void TriangleModel::removeTriangle(int index)
@@ -16,6 +23,7 @@ void TriangleModel::addTriangle(const QPointF &x, const QPointF &y, const QPoint
     beginInsertRows({}, _triangles.size(), _triangles.size());
     _triangles.push_back(Triangle({x, y, z}));
     endInsertRows();
+    calcItersectCount();
 }
 
 int TriangleModel::rowCount(const QModelIndex &parent) const
@@ -47,12 +55,15 @@ bool TriangleModel::setData(const QModelIndex &index, const QVariant &value, int
     switch (role) {
     case XPoint:
         _triangles[index.row()].setPoint(0, value.toPointF());
+        calcItersectCount();
         break;
     case YPoint:
         _triangles[index.row()].setPoint(1, value.toPointF());
+        calcItersectCount();
         break;
     case ZPoint:
         _triangles[index.row()].setPoint(2, value.toPointF());
+        calcItersectCount();
         break;
     }
     emit dataChanged(index, index, {role});
@@ -72,4 +83,10 @@ QHash<int, QByteArray> TriangleModel::roleNames() const
 Qt::ItemFlags TriangleModel::flags(const QModelIndex &index) const
 {
     return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
+}
+
+void TriangleModel::calcItersectCount()
+{
+    _intersectingCount = calcNumberOfIntersecting(_triangles);
+    emit intersectingCountChanged(_intersectingCount);
 }

@@ -133,4 +133,20 @@ Window {
         }
     }
 
+
+    Label {
+        id: intersectLabel
+        anchors.right: parent.right
+        anchors.top: parent.top
+        text: {
+            return qsTr("Число пересечений ") + triangleModel.intersectCount().toString()
+        }
+        Connections {
+            target: triangleModel
+            onIntersectingCountChanged: {
+                intersectLabel.text = qsTr("Число пересечений ") + triangleModel.intersectCount().toString()
+            }
+        }
+    }
+
 }
