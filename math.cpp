@@ -20,6 +20,29 @@ Edge edgeByIndex(const Triangle &triangle, unsigned index)
                 triangle.vertixByIndex((index + 1) % triangleVertixCount)};
 }
 
+std::pair<double, double> getRange(const Triangle &triangle, double (QPointF::*getFunc)() const)
+{
+    const auto minMaxElement = std::minmax_element(triangle.vertixes().begin(), triangle.vertixes().end(),
+                                           [&getFunc](const QPointF &point0, const QPointF &point1) {
+                            return (point0.*getFunc)() < (point1.*getFunc)();
+                        });
+    return {(*minMaxElement.first.*getFunc)(), (*minMaxElement.second.*getFunc)()};
+}
+
+bool triangleContainTriangle(const Triangle &triangle0, const Triangle &triangle1)
+{
+    const std::pair<double, double> xRange = getRange(triangle0, &QPointF::x);
+    const std::pair<double, double> yRange = getRange(triangle0, &QPointF::y);
+
+    for (const QPointF &point : triangle1.vertixes()) {
+        if (point.x() < xRange.first || point.x() > xRange.second
+                || point.y() < yRange.first || point.y() > yRange.second) {
+            return false;
+        }
+    }
+    return true;
+}
+
 bool twoTriangleIntersect(const Triangle &triangle0, const Triangle &triangle1)
 {
     for (int i = 0; i < triangleVertixCount; ++i) {
@@ -30,7 +53,8 @@ bool twoTriangleIntersect(const Triangle &triangle0, const Triangle &triangle1)
                 return true;
         }
     }
-    return false;
+    return triangleContainTriangle(triangle0, triangle1)
+            || triangleContainTriangle(triangle1, triangle0);
 }
 
 int calcNumberOfIntersecting(const QVector<Triangle> &triangles)

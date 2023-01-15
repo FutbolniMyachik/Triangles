@@ -17,6 +17,11 @@ void Triangle::setPoint(int index, const QPointF &point)
     _vertixes[index] = point;
 }
 
+const std::array<QPointF, triangleVertixCount> &Triangle::vertixes() const
+{
+    return _vertixes;
+}
+
 QPointF Triangle::vertixByIndex(int index) const
 {
     return _vertixes[index];

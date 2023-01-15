@@ -14,6 +14,7 @@ public:
 
     void setPoint(int index, const QPointF &point);
 
+    const std::array<QPointF, triangleVertixCount> &vertixes() const;
     QPointF vertixByIndex(int index) const;
     QPointF x() const;
     QPointF y() const;
