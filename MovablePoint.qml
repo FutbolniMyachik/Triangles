@@ -1,5 +1,7 @@
 import QtQuick 2.15
 
+import QtQuick.Controls 2.15
+
 Rectangle {
     id: point
     color: "black"
@@ -12,6 +14,19 @@ Rectangle {
 //        anchors.fill: parent
 //        x: point.x
 //        y: point.y
+
+//        acceptedButtons: Qt.LeftButton
+
+//        Menu {
+//            id: triangleMenu
+//            MenuItem {
+//                text: qsTr("Удалить")
+//            }
+//        }
+
+////        onClicked: {
+////            triangleMenu.popup()
+////        }
 
 //        onMouseXChanged : {
 //            point.x = mapToItem(point.parent, mouse.x, mouse.y).x

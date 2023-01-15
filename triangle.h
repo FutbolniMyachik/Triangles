@@ -11,6 +11,8 @@ public:
     explicit Triangle(const std::array<QPointF, 3> &vertixes);
     explicit Triangle(std::array<QPointF, 3> &&vertixes);
 
+    void setPoint(int index, const QPointF &point);
+
     QPointF x() const;
     QPointF y() const;
     QPointF z() const;

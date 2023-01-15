@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
     engine.load(url);
 
     TriangleModel model;
+    model.addTriangle(QPointF{100, 100}, QPointF{200, 300}, QPointF{300, 400});
     engine.rootContext()->setContextProperty("triangleModel", &model);
     return app.exec();
 }

@@ -33,6 +33,25 @@ QVariant TriangleModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
+bool TriangleModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (role < Roles::TriangleRole || !index.isValid())
+        return QAbstractListModel::setData(index, value, role);
+    switch (role) {
+    case XPoint:
+        _triangles[index.row()].setPoint(0, value.toPointF());
+        break;
+    case YPoint:
+        _triangles[index.row()].setPoint(1, value.toPointF());
+        break;
+    case ZPoint:
+        _triangles[index.row()].setPoint(2, value.toPointF());
+        break;
+    }
+    emit dataChanged(index, index, {role});
+    return true;
+}
+
 QHash<int, QByteArray> TriangleModel::roleNames() const
 {
     QHash<int,QByteArray> roles = QAbstractListModel::roleNames();
@@ -41,4 +60,9 @@ QHash<int, QByteArray> TriangleModel::roleNames() const
     roles.insert(Roles::YPoint, "yPoint");
     roles.insert(Roles::ZPoint, "zPoint");
     return roles;
+}
+
+Qt::ItemFlags TriangleModel::flags(const QModelIndex &index) const
+{
+    return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
 }
